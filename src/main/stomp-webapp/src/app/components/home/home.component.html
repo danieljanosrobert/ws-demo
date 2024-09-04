@@ -1,0 +1,42 @@
+<div class="card">
+    <div class="card-header">
+        <div *ngIf="isEditable">
+            <input type="text" id="name" name="name" class="form-control" [ngClass]="{'invalid': invalid}" required
+                [(ngModel)]="name" placeholder="Your name goes here, then you can't change it!" [readonly]="!isEditable"
+                (blur)="onInputBlur()">
+        </div>
+        <div *ngIf="!isEditable">
+            <p class="text-center">You are: <span class="bold">{{name}}</span></p>
+        </div>
+    </div>
+    <div class="card-body">
+
+        <ul class="list-unstyled mb-0">
+            <li *ngFor="let data of messages" [ngClass]="{'right': isRight(data.name)}" class="chat-message">
+                <div class="chat-day-title">
+                    <div class="conversation-name">{{data.name}}</div>
+                    <div class="user-chat-content">
+                        <div class="ctext-wrap">
+                            <div class="ctext-wrap-content">
+                                <p class="mb-0">
+                                    {{data.message}}
+                                </p>
+                                <p class="chat-time mb-0">
+                                    <i class="ri-time-line align-middle"></i>
+                                    <span class="align-middle">{{getTime(data.time) || '–'}}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="card-footer d-flex align-items-center">
+        <textarea class="form-control me-2" placeholder="Type your message..." [(ngModel)]="text"
+            (keyup.enter)="onSendMessage()" (input)="autoResize($event)"></textarea>
+        <button class="btn btn-primary" (click)="onSendMessage()">
+            <i class="ri-send-plane-2-line"></i>
+        </button>
+    </div>
+</div>
